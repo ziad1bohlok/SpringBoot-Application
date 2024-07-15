@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-@Entity(name = "userDetails")
+@Entity(name = "USER_DETAILS")
 public class User {
     public User(Integer id, String name, LocalDate birthday) {
         this.id = id;

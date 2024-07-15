@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserJPAController {
@@ -29,9 +30,9 @@ public class UserJPAController {
     }
 
     @GetMapping("/jpa/getUser/{id}")
-    public  User getUserById(@PathVariable Integer id){
-        User user=service.getUsersById(id);
-        if(user == null)
+    public Optional<User> getUserById(@PathVariable Integer id){
+        Optional<User> user=jpaService.findById(id);
+        if(user.isEmpty())
         {
             throw new UserNotFoundException("id:" + id);
         }
@@ -49,7 +50,7 @@ public class UserJPAController {
     @PostMapping("/jpa/addUser")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user){
 
-        User savedUser=service.createUser(user);
+        User savedUser=jpaService.save(user);
        /*URI location= ServletUriComponentsBuilder
                .fromCurrentRequest()
                .path("/{id}")
@@ -64,19 +65,19 @@ public class UserJPAController {
 
     @DeleteMapping("/jpa/deleteUser/{id}")
     public  ResponseEntity<String> deleteUserById(@PathVariable Integer id){
-        User user=service.getUsersById(id);
-        if(user == null)
+        Optional<User> user=jpaService.findById(id);
+        if(user.isEmpty())
         {
             throw new UserNotFoundException("user with this id not found:" + id);
         }
-        service.deleteUserById(user);
+        jpaService.deleteById(id);
         return ResponseEntity.ok(String.format("User with id : %d has been deleted",id));
 
 
     }
     @DeleteMapping("/jpa/deleteUserPre/{id}")
     public void deleteUserPre(@PathVariable Integer id){
-        service.deleteUserByIdPredicateMethod(id);
+        jpaService.deleteById(id);
 
     }
 }
