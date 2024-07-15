@@ -8,16 +8,8 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-@Entity(name = "user_details")
+@Entity(name = "userDetails")
 public class User {
-   @Id
-   @GeneratedValue
-    private Integer id;
-    @Size(min=2, message = "Name should have at least 2 characters")
-    private String name;
-
-    @Past(message = "Birth Date should be in the past")
-    private LocalDate birthday;
     public User(Integer id, String name, LocalDate birthday) {
         this.id = id;
         this.name = name;
@@ -60,7 +52,13 @@ public class User {
         this.birthday = birthday;
     }
 
+    @Id
+    @GeneratedValue
+    private Integer id;
 
+    @Size(min=2, message = "Name should have at least 2 characters")
+    private String name;
 
-
+    @Past(message = "Birth Date should be in the past")
+    private LocalDate birthday;
 }
