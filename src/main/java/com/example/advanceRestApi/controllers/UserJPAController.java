@@ -58,8 +58,6 @@ public class UserJPAController {
 
     }
 
-
-
     @DeleteMapping("/jpa/deleteUser/{id}")
     public  ResponseEntity<String> deleteUserById(@PathVariable Integer id){
         Optional<User> user=jpaService.findById(id);
@@ -88,6 +86,7 @@ public class UserJPAController {
         return user.get().getPosts();
 
     }
+
     @PostMapping("/jpa/user/{id}/posts")
     public ResponseEntity<Object> createPostForUser(@PathVariable Integer id, @RequestBody Post newPost) {
         Optional<User> user = jpaService.findById(id);
