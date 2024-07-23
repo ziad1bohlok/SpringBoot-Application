@@ -22,8 +22,6 @@ public class UserJPAController {
         this.jpaService = jpaService;
     }
 
-
-
     @GetMapping("/jpa/users")
     public List<User> retrieveUser (){
         return jpaService.findAll();
@@ -39,13 +37,6 @@ public class UserJPAController {
         return user;
 
     }
-
-
-
-
-
-
-
 
     @PostMapping("/jpa/addUser")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user){
