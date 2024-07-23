@@ -1,12 +1,15 @@
 package com.example.advanceRestApi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name = "USER_DETAILS")
 public class User {
@@ -52,6 +55,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    public List<Post> getPosts() {
+        return Posts;
+    }
+
+    public void setPosts(List<Post> Posts) {
+        this.Posts = Posts;
+    }
+
     @Id
     @GeneratedValue
     private Integer id;
@@ -61,4 +72,8 @@ public class User {
 
     @Past(message = "Birth Date should be in the past")
     private LocalDate birthday;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> Posts;
 }

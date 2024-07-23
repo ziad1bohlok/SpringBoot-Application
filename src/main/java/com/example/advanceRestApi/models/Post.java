@@ -1,11 +1,22 @@
 package com.example.advanceRestApi.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
-public class post {
+public class Post {
+    public Post() {
+
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "post{" +
@@ -18,7 +29,11 @@ public class post {
     @GeneratedValue
     private Integer id;
 
-    public post(Integer id, String description) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore()
+    private User user;
+
+    public Post(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
